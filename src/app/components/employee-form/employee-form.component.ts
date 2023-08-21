@@ -1,9 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Employee } from 'src/app/models/employee';
+import { inject } from 'vue';
 
 export const formMode = {
   CREATE: 'create',
   EDIT: 'edit'
+}
+
+export interface EmployeeData {
+  employee: Employee
 }
 
 @Component({
@@ -15,7 +22,10 @@ export class EmployeeFormComponent implements OnInit {
   form!: FormGroup;
   mode: string = formMode.CREATE;
   
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<EmployeeFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: EmployeeData) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -31,7 +41,11 @@ export class EmployeeFormComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit() : void {
     
+  }
+
+  onCancelClick(): void {
+    this.dialogRef.close();
   }
 }

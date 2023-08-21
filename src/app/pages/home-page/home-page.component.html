@@ -1,1 +1,12 @@
-<app-employee-form></app-employee-form>
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      <div class="row center">
+        <mat-form-field appearance="outline">
+          <input matInput type="text" [(ngModel)]="query" placeholder="Filter" />
+        </mat-form-field>
+        <button mat-raised-button (click)="showDialog()">Add Employee</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
