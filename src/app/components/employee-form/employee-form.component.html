@@ -2,7 +2,7 @@
 <mat-dialog-content>
   <p>Basic Info</p>
   
-  <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit" class="w100">
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()" class="w100">
 
     <div class="row">
       <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -33,7 +33,7 @@
     <div class="row">
       <mat-form-field>
         <mat-label>Choose a date</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
+        <input readonly matInput [matDatepicker]="picker" formControlName="dateOfBirth">
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
@@ -67,9 +67,32 @@
 
     <h4>Skills</h4>
 
+    <div class="row" *ngFor="let skill of skills().controls; let i = index" [formGroupName]="i">
+      <mat-form-field appearance="outline">
+        <mat-label>Skill</mat-label>
+        <input matInput placeholder="" formControlName="skillName"> 
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Years Exp</mat-label>
+        <input matInput placeholder="" formControlName="skillYears"> 
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Seniority</mat-label>
+        <mat-select formControlName="skillSeniority">
+          <mat-option *ngFor="let option of seniorityLevels" [value]="option.value">
+            {{ option.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="warn" (click)="removeSkill(i)">Remove</button>
+    </div>
+
+    <button mat-raised-button (click)="addSkill()" class="w100">+ Add New Skill</button>
+
     <div mat-dialog-actions>
       <button mat-button (click)="onCancelClick()">Cancel</button>
       <button mat-raised-button color="primary" type="submit">Submit</button>
     </div>
+
   </form>
 </mat-dialog-content>

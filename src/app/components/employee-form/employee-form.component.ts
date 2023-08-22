@@ -1,8 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Employee } from 'src/app/models/employee';
-import { inject } from 'vue';
 
 export const formMode = {
   CREATE: 'create',
@@ -21,6 +20,12 @@ export interface EmployeeData {
 export class EmployeeFormComponent implements OnInit {
   form!: FormGroup;
   mode: string = formMode.CREATE;
+
+  seniorityLevels = [
+    { value: 'Junior', label: 'Junior' },
+    { value: 'Intermediate', label: 'Intermediate' },
+    { value: 'Senior', label: 'Senior' }
+  ];
   
   constructor(
     private fb: FormBuilder,
@@ -29,20 +34,43 @@ export class EmployeeFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      contactNumber: ['', Validators.required],
+      firstName: ['', [Validators.required, Validators.minLength(3)]],
+      lastName: ['', [Validators.required, Validators.minLength(3)]],
+      contactNumber: ['', [Validators.required, Validators.minLength(10)]],
       emailAddress: ['', [Validators.required, Validators.email]],
       dateOfBirth: ['', Validators.required],
       streetAddress: ['', Validators.required],
-      city: ['', Validators.required],
-      postalCode: ['', Validators.required],
-      country: ['', Validators.required],
+      city: ['', [Validators.required, Validators.minLength(3)]],
+      postalCode: ['', [Validators.required, Validators.minLength(3)]],
+      country: ['', [Validators.required, Validators.minLength(3)]],
+      skills: this.fb.array([this.newSkill()])
     });
   }
 
+  skills(): FormArray {
+    return this.form.get("skills") as FormArray
+  }
+
+  newSkill(): FormGroup {  
+    return this.fb.group({  
+      skillName: ['', [Validators.required, Validators.minLength(2)]],
+      skillYears: ['',],  
+      skillSeniority: '',  
+    })  
+  }  
+     
+  addSkill() {  
+    this.skills().push(this.newSkill());  
+  }  
+     
+  removeSkill(i: number) {  
+    this.skills().removeAt(i);  
+  } 
+
   onSubmit() : void {
-    
+    if (this.form.valid) {
+      console.log(this.form.value);
+    }
   }
 
   onCancelClick(): void {
