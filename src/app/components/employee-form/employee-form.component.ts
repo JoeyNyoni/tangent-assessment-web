@@ -2,8 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngxs/store';
+import * as moment from 'moment';
 import { Employee } from 'src/app/models/employee';
-import { CreateEmployee } from 'src/app/store/employee/employee.actions';
+import { Skill } from 'src/app/models/skill';
+import { CreateEmployee, UpdateEmployee } from 'src/app/store/employee/employee.actions';
 
 export const formMode = {
   CREATE: 'create',
@@ -44,8 +46,8 @@ export class EmployeeFormComponent implements OnInit {
       dateOfBirth: ['', Validators.required],
       streetAddress: ['', Validators.required],
       city: ['', [Validators.required, Validators.minLength(3)]],
-      postalCode: ['', [Validators.required, Validators.minLength(3)]],
-      country: ['', [Validators.required, Validators.minLength(3)]],
+      postalCode: ['', [Validators.required, Validators.minLength(4)]],
+      country: ['South Africa', [Validators.required, Validators.minLength(3)]],
       skills: this.fb.array([])
     });
   }
@@ -54,15 +56,14 @@ export class EmployeeFormComponent implements OnInit {
     const skills = this.form.controls['skills'] as FormArray;
 
     skills.push(this.fb.group({  
-      skillName: ['', [Validators.required, Validators.minLength(2)]],
-      skillYears: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],  
-      skillSeniority: ['', Validators.required],  
+      name: ['', [Validators.required, Validators.minLength(2)]],
+      yearsExperienced: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],  
+      seniority: ['', Validators.required],  
     }));
   }   
      
   removeSkill(i: number) {
-    const skills = this.form.controls['skills'] as FormArray;
-    skills.removeAt(i);  
+    (this.form.controls['skills'] as FormArray).removeAt(i);
   }
 
   trackByFn(index: number) {
@@ -71,10 +72,38 @@ export class EmployeeFormComponent implements OnInit {
 
   onSubmit() : void {
     console.log(this.form.value);
-    // if (this.form.valid) {
-    //   const emp = new Employee();
-    //   this.store.dispatch(new CreateEmployee(emp));
-    // }
+    const skillsArr: Skill[] = [];
+    
+    if (this.form.valid) {
+      
+      this.form.value.skills.forEach((x: any) => {
+        let newSkill: Skill = {
+          name: x.name,
+          yearsExperienced: x.yearsExperienced,
+          seniority: x.seniority
+        };
+        skillsArr.push(newSkill);
+      });
+
+      const emp: Employee = {
+        firstName: this.form.value.firstName,
+        lastName: this.form.value.lastName,
+        contactNumber: this.form.value.contactNumber,
+        emailAddress: this.form.value.emailAddress,
+        dateOfBirth: moment(this.form.value.dateOfBirth).format("YYYY-MM-DD"),
+        stringAddress: this.form.value.streetAddress,
+        city: this.form.value.city,
+        postalCode: this.form.value.postalCode,
+        country: this.form.value.country,
+        skills: skillsArr
+      };
+
+      if (this.mode =  formMode.CREATE) {
+        this.store.dispatch(new CreateEmployee(emp));
+      } else {
+        this.store.dispatch(new UpdateEmployee(emp, emp.id))
+      }
+    }
   }
 
   onCancelClick(): void {

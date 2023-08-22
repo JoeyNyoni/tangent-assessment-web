@@ -71,15 +71,15 @@
       <div [formGroupName]="i">
         <mat-form-field appearance="outline">
           <mat-label>Skill</mat-label>
-          <input matInput placeholder="" formControlName="skillName"> 
+          <input matInput placeholder="" formControlName="name"> 
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Years Exp</mat-label>
-          <input matInput placeholder="" formControlName="skillYears"> 
+          <input matInput placeholder="" formControlName="yearsExperienced"> 
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Seniority</mat-label>
-          <mat-select formControlName="skillSeniority">
+          <mat-select formControlName="seniority">
             <mat-option *ngFor="let option of seniorityLevels" [value]="option.value">
               {{ option.label }}
             </mat-option>
@@ -93,7 +93,7 @@
 
     <div mat-dialog-actions>
       <button mat-button (click)="onCancelClick()">Cancel</button>
-      <button mat-raised-button color="primary" type="submit">Submit</button>
+      <button mat-raised-button color="primary" type="submit" disabled="{{this.form.valid}}">Create Employee</button>
     </div>
 
   </form>
