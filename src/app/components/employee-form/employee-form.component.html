@@ -67,24 +67,26 @@
 
     <h4>Skills</h4>
 
-    <div class="row" *ngFor="let skill of skills().controls; let i = index" [formGroupName]="i">
-      <mat-form-field appearance="outline">
-        <mat-label>Skill</mat-label>
-        <input matInput placeholder="" formControlName="skillName"> 
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Years Exp</mat-label>
-        <input matInput placeholder="" formControlName="skillYears"> 
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Seniority</mat-label>
-        <mat-select formControlName="skillSeniority">
-          <mat-option *ngFor="let option of seniorityLevels" [value]="option.value">
-            {{ option.label }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <button mat-raised-button color="warn" (click)="removeSkill(i)">Remove</button>
+    <div formArrayName="skills" class="row" *ngFor="let skill of form.controls['skills']?.value; let i = index ; trackBy:trackByFn" >
+      <div [formGroupName]="i">
+        <mat-form-field appearance="outline">
+          <mat-label>Skill</mat-label>
+          <input matInput placeholder="" formControlName="skillName"> 
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Years Exp</mat-label>
+          <input matInput placeholder="" formControlName="skillYears"> 
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Seniority</mat-label>
+          <mat-select formControlName="skillSeniority">
+            <mat-option *ngFor="let option of seniorityLevels" [value]="option.value">
+              {{ option.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-raised-button color="warn" (click)="removeSkill(i)">Remove</button>
+      </div>
     </div>
 
     <button mat-raised-button (click)="addSkill()" class="w100">+ Add New Skill</button>
