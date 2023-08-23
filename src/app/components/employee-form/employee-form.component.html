@@ -93,7 +93,7 @@
 
     <div mat-dialog-actions>
       <button mat-button (click)="onCancelClick()">Cancel</button>
-      <button mat-raised-button color="primary" type="submit" disabled="{{this.form.valid}}">Create Employee</button>
+      <button mat-raised-button color="primary" type="submit" disabled="{{!this.form.valid}}">Create Employee</button>
     </div>
 
   </form>

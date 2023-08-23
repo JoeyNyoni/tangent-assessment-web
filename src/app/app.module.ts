@@ -22,6 +22,7 @@ import { AppComponent } from './app.component';
 import { EmployeeDetailComponent } from './components/ui/employee-detail/employee-detail.component';
 import { EmployeeFormComponent } from './components/employee-form/employee-form.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
+import { EmployeeStates } from './store';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
     MatNativeDateModule,
     MatSelectModule,
     NgxsModule.forRoot(),
+    NgxsModule.forFeature(EmployeeStates),
     ReactiveFormsModule
   ],
   providers: [],
