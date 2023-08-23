@@ -7,7 +7,7 @@ export class Employee {
   contactNumber?: string;
   emailAddress?: string;
   dateOfBirth?: string;
-  stringAddress?: string;
+  streetAddress?: string;
   city?: string;
   postalCode?: string;
   country?: string;

@@ -91,7 +91,7 @@ export class EmployeeFormComponent implements OnInit {
         contactNumber: this.form.value.contactNumber,
         emailAddress: this.form.value.emailAddress,
         dateOfBirth: moment(this.form.value.dateOfBirth).format("YYYY-MM-DD"),
-        stringAddress: this.form.value.streetAddress,
+        streetAddress: this.form.value.streetAddress,
         city: this.form.value.city,
         postalCode: this.form.value.postalCode,
         country: this.form.value.country,
