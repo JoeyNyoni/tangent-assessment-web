@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Observable, Subscription, fromEvent } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import { MatDialog } from '@angular/material/dialog';
+import { filter, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 import { GetEmployees } from 'src/app/store';
 import { EmployeeState } from 'src/app/store/employee/employee.state';
@@ -15,12 +16,13 @@ import { Employee } from 'src/app/models/employee';
 })
 export class HomePageComponent implements OnInit, OnDestroy {
   @Select(EmployeeState.getEmployees) employees$!: Observable<any[]>;
+  @ViewChild('query', { static: true }) query: ElementRef;
 
-  query: string = '';
   toggleShowDialog: boolean = false;
   employeeCount: number = 0;
   employees: Employee[] = [];
   private subscription: Subscription | undefined;
+  term: string;
   
   constructor(public dialog: MatDialog, private store: Store) {
     this.getEmployees();
@@ -30,6 +32,18 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.subscription = this.employees$.subscribe((data) => {
       this.employeeCount = data ? data[0]?.length : this.employeeCount;
     })    
+  }
+
+  ngAfterViewInit() {
+    fromEvent(this.query.nativeElement, 'keyup')
+    .pipe(
+      filter(Boolean),
+      debounceTime(1000),
+      distinctUntilChanged(),
+      tap(() => {
+        this.term = this.query.nativeElement.value;
+      })
+    ).subscribe((val) => {});
   }
 
   ngOnDestroy(): void {

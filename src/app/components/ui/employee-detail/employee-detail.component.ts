@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, OnDestroy, SimpleChanges } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { Select, Store } from '@ngxs/store';
@@ -14,8 +14,10 @@ import { formMode } from '../../helpers/constants';
   templateUrl: './employee-detail.component.html',
   styleUrls: ['./employee-detail.component.sass']
 })
-export class EmployeeDetailComponent implements OnInit, OnDestroy {
+export class EmployeeDetailComponent implements OnInit, OnDestroy, OnChanges {
+  @Input() query: string;
   @Select(EmployeeState.getEmployees) employees$!: Observable<any[]>;
+  
   employees: Employee[] = [];
   private subscription!: Subscription;
   
@@ -24,12 +26,22 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.employees$.subscribe((data) => {
       this.employees = data[0];
-      console.log('huh', this.employees);
-    })
+    });
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    let q = changes['query'].currentValue
+    if (q) {
+      this.employees = this.employees.filter((x) => x.firstName?.includes(q) || x.lastName?.includes(q) || x.emailAddress?.includes(q))
+    } else {
+      this.subscription = this.employees$.subscribe((data) => {
+        this.employees = data[0];
+      });
+    }
   }
 
   showDialog(e: Employee) : void {

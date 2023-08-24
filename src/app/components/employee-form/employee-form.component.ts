@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
 import * as moment from 'moment';
-
+ 
 import { Employee } from 'src/app/models/employee';
 import { Skill } from 'src/app/models/skill';
 import { CreateEmployee, UpdateEmployee } from 'src/app/store/employee/employee.actions';
@@ -134,7 +134,6 @@ export class EmployeeFormComponent implements OnInit, OnDestroy {
         this.store.dispatch(new UpdateEmployee(emp, emp.id))
       } else {
         this.store.dispatch(new CreateEmployee(emp)).subscribe((res) => {
-          console.log(res);
           this.onCancelClick();
         });
       }
@@ -142,7 +141,6 @@ export class EmployeeFormComponent implements OnInit, OnDestroy {
   }
 
   onCancelClick(): void {
-    console.log(this.form.value);
     this.dialogRef.close();
   }
 }
