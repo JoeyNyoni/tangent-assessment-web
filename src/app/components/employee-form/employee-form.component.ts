@@ -55,7 +55,7 @@ export class EmployeeFormComponent implements OnInit, OnDestroy {
       lastName: [this.existingEmp ? this.existingEmp.lastName : '', [Validators.required, Validators.minLength(3)]],
       contactNumber: [this.existingEmp ? this.existingEmp.contactNumber : '', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(10)]],
       emailAddress: [this.existingEmp ? this.existingEmp.emailAddress : '', [Validators.required, Validators.email]],
-      dateOfBirth: [this.existingEmp.dateOfBirth ? moment(this.existingEmp.dateOfBirth).toISOString() : '', Validators.required],
+      dateOfBirth: [this.existingEmp? moment(this.existingEmp.dateOfBirth).toISOString() : '', Validators.required],
       streetAddress: [this.existingEmp ? this.existingEmp.streetAddress : '', Validators.required],
       city: [this.existingEmp ? this.existingEmp.city : '', [Validators.required, Validators.minLength(3)]],
       postalCode: [this.existingEmp ? this.existingEmp.postalCode : '', [Validators.required, Validators.minLength(4)]],
