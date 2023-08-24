@@ -4,7 +4,15 @@ import { tap } from 'rxjs/operators';
 
 import { Employee } from "src/app/models/employee";
 import { EmployeeService } from "src/app/services/employee.service";
-import { CreateEmployee, DeleteEmployee, GetEmployeeById, GetEmployees, UpdateEmployee } from "./employee.actions";
+
+import { 
+  CreateEmployee, 
+  DeleteEmployee, 
+  GetEmployees, 
+  ResetSelectedEmployee, 
+  SetSelectedEmployee, 
+  UpdateEmployee 
+} from "./employee.actions";
 
 export interface EmployeeStateModel {
   employees: Employee[];
@@ -34,7 +42,7 @@ export class EmployeeState {
   }
 
   @Selector()
-  static getEmployeeById(state: EmployeeStateModel) {
+  static getSelectedEmployee(state: EmployeeStateModel) {
     return state.selectedEmployee;
   }
 
@@ -52,11 +60,17 @@ export class EmployeeState {
       ctx.patchState({ employees: [...state.employees, response] });
     }));
   }
-
-  @Action(GetEmployeeById)
-  getEmployeeById(ctx: StateContext<EmployeeStateModel>, { id }: GetEmployeeById) {
+  
+  @Action(SetSelectedEmployee)
+  setSelectedEmployee(ctx: StateContext<EmployeeStateModel>, { payload }: SetSelectedEmployee) {
     const state =  ctx.getState();
-    ctx.patchState({ selectedEmployee: [...state.selectedEmployee, state.employees.find(x => x.id === id)] });
+    ctx.patchState({ selectedEmployee: payload });
+  }
+
+  @Action(ResetSelectedEmployee)
+  resetSelectedEmployee(ctx: StateContext<EmployeeStateModel>) {
+    const state =  ctx.getState();
+    ctx.patchState({ selectedEmployee: null });
   }
 
   @Action(CreateEmployee)

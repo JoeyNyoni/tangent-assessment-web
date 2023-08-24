@@ -17,13 +17,6 @@ export class EmployeeService {
       return response;
     }));
   }
-
-  getEmployeeById(id: string) {
-    return this.http.get(`${this.API}/employee/${id}`).pipe(map(response => {
-      return response;
-    }));
-  }
-
   createEmployee(employee: Employee) {
     return this.http.post(`${this.API}/employee`, employee).pipe(map(response => {
       return response;
