@@ -48,7 +48,7 @@ export class EmployeeState {
   @Action(GetEmployees)
   getEmployees(ctx: StateContext<EmployeeStateModel>) {
     return this.service.getEmployees().pipe(tap( response => {
-      const state =  ctx.getState();1
+      const state =  ctx.getState();
       ctx.patchState({ employees: [...state.employees, response] });
     }));
   }

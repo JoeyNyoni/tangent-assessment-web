@@ -1,11 +1,19 @@
-<div class="container">
+<div class="container home-page">
   <mat-card>
     <mat-card-content>
       <div class="row center">
-        <mat-form-field appearance="outline">
-          <input matInput type="text" [(ngModel)]="query" placeholder="Filter" />
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+          <h3>Employees</h3>
+          <p>There are {{ employeeCount }} employees</p>
+        </div>
+        <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+          <input matInput type="text" [(ngModel)]="query" placeholder="Search" />
         </mat-form-field>
-        <button mat-raised-button (click)="showDialog()">Add Employee</button>
+        <button mat-raised-button (click)="showDialog()" class="col-xs-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 app-button">Add Employee</button>
+      </div>
+
+      <div class="row">
+        <app-employee-detail></app-employee-detail>
       </div>
     </mat-card-content>
   </mat-card>

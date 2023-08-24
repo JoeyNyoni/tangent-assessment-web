@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Observable, Subscription } from 'rxjs';
+import { Select, Store } from '@ngxs/store';
+
+import { GetEmployees } from 'src/app/store';
+import { EmployeeState } from 'src/app/store/employee/employee.state';
 import { EmployeeFormComponent } from 'src/app/components/employee-form/employee-form.component';
 import { Employee } from 'src/app/models/employee';
 
@@ -8,26 +13,47 @@ import { Employee } from 'src/app/models/employee';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.sass']
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent implements OnInit, OnDestroy, AfterViewInit {
+  @Select(EmployeeState.getEmployees) employees$!: Observable<any[]>;
+
   query: string = '';
   toggleShowDialog: boolean = false;
+  employeeCount: number = 0;
   employees: Employee[] = [];
+  private subscription: Subscription | undefined;
+  
+  constructor(public dialog: MatDialog, private store: Store) {
+    this.getEmployees();
+  }
 
-  constructor(public dialog: MatDialog) {}
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    this.subscription = this.employees$.subscribe((data) => {
+      this.employeeCount = data[0].length;
+    })    
+  }
 
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 
   showDialog() : void {
     const dialogRef = this.dialog.open(EmployeeFormComponent, {
       width: '50%',
-      minHeight: 'calc(100vh - 90px)',
-      height : 'auto',
+      minHeight: 'calc(100vh - 50px)',
+      position: { left: '15px' },
       data: {  },
     });
+
     dialogRef.afterClosed().subscribe((res) => {
       
+    });
+  }
+  
+  getEmployees() {
+    this.store.dispatch(new GetEmployees()).subscribe((state) => {
+      this.employees = state.employeeState.employees[0];
     });
   }
 }

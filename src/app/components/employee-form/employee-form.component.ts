@@ -71,7 +71,6 @@ export class EmployeeFormComponent implements OnInit {
   }
 
   onSubmit() : void {
-    console.log(this.form.value);
     const skillsArr: Skill[] = [];
     
     if (this.form.valid) {
