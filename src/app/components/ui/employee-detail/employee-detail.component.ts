@@ -6,7 +6,8 @@ import { Select, Store } from '@ngxs/store';
 import { EmployeeFormComponent } from 'src/app/components/employee-form/employee-form.component';
 import { EmployeeState } from 'src/app/store/employee/employee.state';
 import { Employee } from 'src/app/models/employee';
-import { GetEmployees, SetSelectedEmployee } from 'src/app/store';
+import { GetEmployees, ResetSelectedEmployee, SetSelectedEmployee } from 'src/app/store';
+import { formMode } from '../../helpers/constants';
 
 @Component({
   selector: 'app-employee-detail',
@@ -38,10 +39,11 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy {
       width: '50%',
       minHeight: 'calc(100vh - 50px)',
       position: { left: '15px' },
-      data: { employee: e, mode: 'edit' },
+      data: { employee: e, mode: formMode.EDIT },
     });
 
     dialogRef.afterClosed().subscribe((res) => {
+      this.store.dispatch(new ResetSelectedEmployee());
       this.store.dispatch(new GetEmployees());
     });
   }

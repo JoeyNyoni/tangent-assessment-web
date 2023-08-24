@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
+import { MatDialog } from '@angular/material/dialog';
 
 import { GetEmployees } from 'src/app/store';
 import { EmployeeState } from 'src/app/store/employee/employee.state';
@@ -13,7 +13,7 @@ import { Employee } from 'src/app/models/employee';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.sass']
 })
-export class HomePageComponent implements OnInit, OnDestroy, AfterViewInit {
+export class HomePageComponent implements OnInit, OnDestroy {
   @Select(EmployeeState.getEmployees) employees$!: Observable<any[]>;
 
   query: string = '';
@@ -26,11 +26,9 @@ export class HomePageComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getEmployees();
   }
 
-  ngOnInit(): void {}
-
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.subscription = this.employees$.subscribe((data) => {
-      this.employeeCount = data[0].length;
+      this.employeeCount = data ? data[0]?.length : this.employeeCount;
     })    
   }
 
@@ -47,7 +45,7 @@ export class HomePageComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe((res) => {
-      
+      this.store.dispatch(new GetEmployees());
     });
   }
   
