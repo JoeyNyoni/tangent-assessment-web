@@ -1,1 +1,8 @@
-<p>employee-detail works!</p>
+<div class="container">
+  <div class="row employee-block" *ngFor="let emp of this.employees; let i = index ; trackBy:trackByFn">
+    <div class="col-xs-4 col-sm-6 col-md-3 col-lg-1 col-xl-1">{{ i + 1 }}</div>
+    <div class="col-xs-4 col-sm-6 col-md-3 col-lg-2 col-xl-2">{{ emp.firstName }}</div>
+    <div class="col-xs-4 col-sm-6 col-md-3 col-lg-2 col-xl-2">{{ emp.lastName }}</div>
+    <div class="col-xs-4 col-sm-6 col-md-3 col-lg-2 col-xl-2">{{ emp.contactNumber }}</div>
+  </div>
+</div>
