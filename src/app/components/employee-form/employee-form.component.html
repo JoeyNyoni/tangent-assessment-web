@@ -5,12 +5,12 @@
   <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()" class="w100">
 
     <div class="row">
-      <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
         <mat-label>First Name</mat-label>
         <input matInput placeholder="" formControlName="firstName">
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-8 col-lg-8">
         <mat-label>Last Name</mat-label>
         <input matInput placeholder="" formControlName="lastName">
       </mat-form-field>
@@ -49,17 +49,17 @@
     </div>
 
     <div class="row">
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
         <mat-label>City</mat-label>
         <input matInput placeholder="" formControlName="city">
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
         <mat-label>Postal Code</mat-label>
         <input matInput placeholder="" formControlName="postalCode">
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
         <mat-label>Country</mat-label>
         <input matInput placeholder="" formControlName="country">
       </mat-form-field>
@@ -68,16 +68,18 @@
     <h4>Skills</h4>
 
     <div formArrayName="skills" class="row" *ngFor="let skill of form.controls['skills']?.value; let i = index ; trackBy:trackByFn" >
-      <div [formGroupName]="i">
-        <mat-form-field appearance="outline">
+      <div [formGroupName]="i" class="row">
+        <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
           <mat-label>Skill</mat-label>
           <input matInput placeholder="" formControlName="name"> 
         </mat-form-field>
-        <mat-form-field appearance="outline">
+
+        <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
           <mat-label>Years Exp</mat-label>
           <input matInput placeholder="" formControlName="yearsExperienced"> 
         </mat-form-field>
-        <mat-form-field appearance="outline">
+
+        <mat-form-field appearance="outline" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
           <mat-label>Seniority</mat-label>
           <mat-select formControlName="seniority">
             <mat-option *ngFor="let option of seniorityLevels" [value]="option.value">
@@ -85,13 +87,16 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <button mat-raised-button color="warn" (click)="removeSkill(i)">Remove</button>
+
+        <button mat-raised-button color="warn" (click)="removeSkill(i)" class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+          Remove
+        </button>
       </div>
     </div>
 
     <button mat-raised-button (click)="addSkill()" class="w100">+ Add New Skill</button>
 
-    <div mat-dialog-actions>
+    <div mat-dialog-actions align="end">
       <button mat-button (click)="onCancelClick()">Cancel</button>
       <button mat-raised-button color="primary" type="submit" disabled="{{!this.form.valid}}">Create Employee</button>
     </div>
