@@ -8,6 +8,7 @@ import { GetEmployees } from 'src/app/store';
 import { EmployeeState } from 'src/app/store/employee/employee.state';
 import { EmployeeFormComponent } from 'src/app/components/employee-form/employee-form.component';
 import { Employee } from 'src/app/models/employee';
+import { formMode } from 'src/app/components/helpers/constants';
 
 @Component({
   selector: 'app-home-page',
@@ -55,7 +56,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
       width: '50%',
       minHeight: 'calc(100vh - 50px)',
       position: { left: '15px' },
-      data: {  },
+      data: { mode: formMode.CREATE },
     });
 
     dialogRef.afterClosed().subscribe((res) => {

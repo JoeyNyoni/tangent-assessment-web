@@ -1,27 +1,50 @@
-# Web
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
+Tangent Assessment v1.0
 
-## Development server
+This is a brief of how the Employee API works along with the UI shown.
+The following screenshots and explanations are found below:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+1.  Opening Page
 
-## Code scaffolding
+    a.  The employee list which is collected from the GetEmployees API
+        is shown here.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+> ![A screenshot of a computer Description automatically
+> generated](./image1.png){width="4.856548556430446in"
+> height="2.3863057742782154in"}
 
-## Build
+b.  The top section contains the following: An indicator that shows how
+    many employees are fetched from the API, The search bar that can be
+    used to search for employees by name, surname and email address, and
+    the Add Employee button to open a new form to create a new employee.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+> ![A screenshot of a computer Description automatically
+> generated](./image2.png){width="5.306073928258968in"
+> height="1.7059864391951005in"}
 
-## Running unit tests
+c.  In the event there's no employees retrieved from the API, the
+    following screen will appear
+    ![](./image3.png){width="4.929110892388452in"
+    height="3.128614391951006in"}
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+2.  Employee Form
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+    a.  The form is the component used to create and edit new employees.
+        Validations for each field are applied. Skills for employees can
+        be added and removed during the process
 
-## Further help
+> ![A screenshot of a computer Description automatically
+> generated](./image4.png){width="3.5398873578302714in"
+> height="3.3998764216972877in"}
+>
+> ![A screenshot of a computer Description automatically
+> generated](./image5.png){width="5.0419280402449695in"
+> height="3.1963123359580052in"}
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+b.  Clicking on an entry in the employee list will open the employee
+    form with a view to edit
+
+> ![A screenshot of a computer Description automatically
+> generated](./image6.png){width="4.8655424321959755in"
+> height="2.4979965004374454in"}
